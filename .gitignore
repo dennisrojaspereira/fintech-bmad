@@ -1,0 +1,27 @@
+# Dependências
+node_modules/
+vendor/
+target/
+bin/
+obj/
+
+# Build
+dist/
+build/
+out/
+*.log
+
+# Ambiente
+.env
+.env.*
+!.env.example
+
+# IDE / SO
+.idea/
+.vs/
+*.swp
+.DS_Store
+Thumbs.db
+
+# BMAD (artefatos locais de execução)
+.bmad-cache/
