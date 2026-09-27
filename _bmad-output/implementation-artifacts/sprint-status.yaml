@@ -1,0 +1,221 @@
+---
+title: Sprint Planning — Fintech MVP (8-12 weeks)
+project: fintech-bmad
+date_created: 2026-09-27
+date_updated: 2026-09-27
+sprint_length_days: 14
+total_sprints: 5
+total_stories: 35
+---
+
+# Sprint Planning — Fintech MVP
+
+## Overview
+
+**Total Duration:** 8-10 weeks (5 sprints × 2 weeks)
+**Total Stories:** 35 across 7 epics
+**Target MVP Launch:** Mid-November 2026
+
+---
+
+## Sprint 1: Platform Foundation (Week 1-2)
+
+**Goal:** Set up database, authentication, and infrastructure so that subsequent epics have a solid foundation.
+
+**Epic:** Epic 1 (Platform Foundation & Infrastructure)
+
+### Stories (5)
+
+| Story | Title | Status | Story Points | Dev Time |
+|-------|-------|--------|---------------|----|
+| 1.1 | PostgreSQL Database Setup & Schema Initialization | TODO | 5 | 1 day |
+| 1.2 | Express.js Server Scaffolding & Health Check | TODO | 3 | 0.5 day |
+| 1.3 | User Authentication (Registration & Login) | TODO | 5 | 1 day |
+| 1.4 | Environment Secrets Management & Encryption | TODO | 3 | 0.5 day |
+| 1.5 | Basic Logging & Monitoring Foundation | TODO | 2 | 0.5 day |
+
+**Story Points Total:** 18
+**Sprint Capacity:** 20 SP
+**Status:** READY (all stories have clear ACs)
+
+---
+
+## Sprint 2: Bank Integration & Payment Ingestion (Week 3-4)
+
+**Goal:** Enable users to connect their bank and start receiving payments, setting up the data pipeline.
+
+**Epics:** Epic 2 (Bank Integration & Onboarding) + Epic 3 (Payment Ingestion)
+
+### Stories (7)
+
+| Story | Title | Status | Story Points | Epic |
+|-------|-------|--------|---------------|------|
+| 2.1 | Pluggy OAuth Integration & Bank Connection UI | TODO | 5 | E2 |
+| 2.2 | Invoice Configuration (Manual Upload via CSV) | TODO | 3 | E2 |
+| 2.3 | PSP Selection & Webhook Configuration | TODO | 3 | E2 |
+| 2.4 | Onboarding Completion & First Login | TODO | 2 | E2 |
+| 3.1 | Asaas Webhook Receiver & Signature Validation | TODO | 4 | E3 |
+| 3.2 | Payment Event Normalization & Storage | TODO | 4 | E3 |
+| 3.3 | Duplicate Payment Detection | TODO | 2 | E3 |
+
+**Story Points Total:** 23
+**Sprint Capacity:** 20 SP
+**Status:** SLIGHTLY OVER (can reduce 3.3 to 1 SP or defer to Sprint 3)
+
+**Recommendation:** Defer Story 3.3 to Sprint 3 (keep Sprint 2 at 21 SP)
+
+---
+
+## Sprint 3: Bank Synchronization & Matching Setup (Week 5-6)
+
+**Goal:** Sync bank statements and implement the core matching algorithm that reconciles payments.
+
+**Epics:** Epic 4 (Bank Statement Sync) + Epic 5 (Reconciliation — Part 1)
+
+### Stories (5-6)
+
+| Story | Title | Status | Story Points | Epic |
+|-------|-------|--------|---------------|------|
+| 3.3 | Duplicate Payment Detection | TODO | 1 | E3 |
+| 4.1 | Pluggy API Integration & Transaction Fetch | TODO | 4 | E4 |
+| 4.2 | Bank Transaction Normalization & Dedup | TODO | 3 | E4 |
+| 4.3 | Bank Sync Monitoring & Error Handling | TODO | 2 | E4 |
+| 5.1 | Matching Algorithm Implementation | TODO | 5 | E5 |
+| 5.2 | Reconciliation Record Creation & Status Update | TODO | 3 | E5 |
+
+**Story Points Total:** 18
+**Sprint Capacity:** 20 SP
+**Status:** READY
+
+---
+
+## Sprint 4: Dashboard & Conflict Resolution (Week 7-8)
+
+**Goal:** Build user-facing dashboard where Marco can see reconciliation status and resolve conflicts manually.
+
+**Epics:** Epic 5 (Reconciliation — Part 2) + Epic 6 (Dashboard)
+
+### Stories (7)
+
+| Story | Title | Status | Story Points | Epic |
+|-------|-------|--------|---------------|------|
+| 5.3 | Conflict Record Creation (No Match / Ambiguous) | TODO | 2 | E5 |
+| 5.4 | Split & Multi-Payment Scenarios | TODO | 5 | E5 |
+| 6.1 | Dashboard Main View (Reconciliation Summary) | TODO | 5 | E6 |
+| 6.2 | Conflict Resolution UI (Manual Linking) | TODO | 5 | E6 |
+| 6.3 | Dashboard Responsiveness (Desktop & Tablet) | TODO | 3 | E6 |
+| 6.4 | Dashboard Performance (< 2s Load Time) | TODO | 2 | E6 |
+
+**Story Points Total:** 22
+**Sprint Capacity:** 20 SP
+**Status:** SLIGHTLY OVER (can split 5.4 or defer one optimization)
+
+**Recommendation:** Story 6.4 (Performance) can be deferred to Sprint 5 as a polish pass (keep Sprint 4 at 20 SP)
+
+---
+
+## Sprint 5: REST API & Polish (Week 9-10)
+
+**Goal:** Expose API for external integrations (ERPs, accountants); final polish and performance tuning.
+
+**Epics:** Epic 7 (REST API & External Integration) + Polish
+
+### Stories (5-6)
+
+| Story | Title | Status | Story Points | Epic |
+|-------|-------|--------|---------------|------|
+| 6.4 | Dashboard Performance (< 2s Load Time) | TODO | 2 | E6 |
+| 7.1 | GET /v1/reconciliations Endpoint | TODO | 4 | E7 |
+| 7.2 | GET /v1/conflicts Endpoint | TODO | 3 | E7 |
+| 7.3 | POST /v1/conflicts/{id}/resolve Endpoint | TODO | 4 | E7 |
+| 7.4 | GET /v1/summary Endpoint & Daily Metrics | TODO | 3 | E7 |
+| 7.5 | API Key Management & Authentication | TODO | 4 | E7 |
+
+**Story Points Total:** 20
+**Sprint Capacity:** 20 SP
+**Status:** READY (perfect fit)
+
+---
+
+## Story Dependencies & Parallelization
+
+```
+Sprint 1 (Foundation)
+  ↓
+Sprint 2 (Onboarding + Webhooks) — can run in parallel
+  ├─ Bank Integration (Stories 2.1-2.4)
+  └─ Payment Ingestion (Stories 3.1-3.3)
+  ↓
+Sprint 3 (Bank Sync + Matching)
+  ├─ Bank Sync (Stories 4.1-4.3) — waits for Sprint 2
+  └─ Matching (Stories 5.1-5.2) — waits for Sprint 2 + 3
+  ↓
+Sprint 4 (Dashboard + Conflicts)
+  ├─ Conflicts (Stories 5.3-5.4) — waits for 5.1-5.2
+  └─ Dashboard (Stories 6.1-6.3) — waits for 5.3
+  ↓
+Sprint 5 (API + Polish)
+  ├─ Dashboard Polish (Story 6.4)
+  └─ REST API (Stories 7.1-7.5) — waits for 5.2-5.3
+```
+
+---
+
+## Risks & Mitigation
+
+| Risk | Impact | Probability | Mitigation |
+|------|--------|-------------|-----------|
+| Pluggy API downtime | Blocks Sprint 3+ | Low | Test fallback (polling every 1h if needed) |
+| Matching algorithm accuracy < 85% | Core MVP metric at risk | Medium | User testing in Sprint 3; iterate on fuzzy match logic |
+| Database performance degradation | Blocks Sprint 4+ | Low | Index early (Sprint 1); monitor query times |
+| Webhook delivery failures | Data loss | Low | Implement retry logic + duplicate detection (Sprint 2-3) |
+| Scope creep (Cielo, multi-tenant, etc.) | Delays MVP | High | Hold scope to 7 epics; document roadmap for v1.1 |
+
+---
+
+## Velocity & Capacity
+
+**Story Points per Sprint:**
+- Sprint 1: 18 SP ✅
+- Sprint 2: 21 SP (or 19 SP if 3.3 moved) ✅
+- Sprint 3: 18 SP ✅
+- Sprint 4: 20 SP (or 17 SP if 6.4 moved) ✅
+- Sprint 5: 20 SP ✅
+
+**Total:** ~97 SP across 5 sprints
+**Avg Velocity:** ~19.4 SP/sprint
+
+---
+
+## Next Actions
+
+1. **Week 1 (Sprint 1 Kickoff):** Assign developers to Epic 1 stories; set up CI/CD pipeline (GitHub Actions → EC2)
+2. **Mid-Week 2:** Sprint 1 demo; Stories ready → 60% done
+3. **Week 3 (Sprint 2 Kickoff):** 2-3 developers on Stories 2.1-2.3 in parallel; 1 dev on 3.1-3.2
+4. **Week 4:** Sprint 2 demo; first user test (Marco) tries onboarding + receives test payment
+5. **Week 5 (Sprint 3):** Implement matching; monitor real data from test user
+6. **Week 7 (Sprint 4):** Dashboard ready; Marco resolves conflicts in prod
+7. **Week 9 (Sprint 5):** API endpoints live; accountant integrates via Omie/Conta Azul
+8. **Week 10:** Final polish, docs, prepare for launch
+
+---
+
+## Files & Tracking
+
+- **Epics & Stories:** `_bmad-output/planning-artifacts/epics.md`
+- **Architecture:** `_bmad-output/planning-artifacts/architecture/ARCHITECTURE-SPINE.md`
+- **Sprint Status:** This file (`sprint-status.yaml`)
+- **Implementation Progress:** (To be updated as sprints progress)
+
+---
+
+## Status Summary
+
+| Component | Status | Notes |
+|-----------|--------|-------|
+| Epics | ✅ APPROVED | 7 epics, clear boundaries |
+| Stories | ✅ READY | 35 stories, all with acceptance criteria |
+| Sprint Allocation | ✅ BALANCED | ~19 SP/sprint, 5 sprints total |
+| Dependencies | ✅ CLEAR | Linear flow, Sprint 2+ can partially parallelize |
+| Risks | ⚠️ IDENTIFIED | Matching accuracy, Pluggy uptime, scope creep |
+| **Overall Readiness** | ✅ **GO** | **Team can start Sprint 1 immediately** |
